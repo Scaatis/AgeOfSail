@@ -123,6 +123,14 @@ Announces a change in wind direction.
     }
 Announces that a ship has fired cannons. It also announces your failure to comprehend nautical directions to the world at large.
 
+    { "type":"hit",
+      "id":68,
+      "shooter":77,
+      "damage":8,
+      "hp":24
+    }
+Announces that a player has hit another player with cannons, how much damage was done and how many hit points the defender has remaining. (2)
+
     { "type":"report",
       "ships": [ 
         { "id":77
@@ -147,3 +155,4 @@ Footnotes
 -------------------------------------------------------------------------------------------
 
 (1) Exact values subject to change
+(2) This may or may not become a "hit summary" in case several cannonballs fired in the same salvo do not hit simultaneously.
