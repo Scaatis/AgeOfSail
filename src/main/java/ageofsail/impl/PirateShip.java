@@ -36,6 +36,7 @@ public class PirateShip implements Ship{
     private static double RECOIL = 1.0;
 
     private final int id;
+    private final double maxHealth;
     private int health = 0;
     private double x;
     private double y;
@@ -50,6 +51,7 @@ public class PirateShip implements Ship{
     public PirateShip(final int id, final World world, final int health, final int latitude, final int longitude) {
         this.id = id;
         this.world = world;
+        this.maxHealth = health;
         this.health = health;
         this.x = longitude;
         this.y = latitude;
@@ -73,7 +75,8 @@ public class PirateShip implements Ship{
         }
 
         // Update the speed of the ship.
-        double calcSpeed = applyWindPhysics(speedLevel.getModifier() * world.getWindSpeed(), direction);
+        // FIXME I would say the health speed modifier with health/maxHealth is ok.
+        double calcSpeed = applyWindPhysics((health/maxHealth) * speedLevel.getModifier() * world.getWindSpeed(), direction);
         if (calcSpeed != speed) {
             double dif = speed - calcSpeed;
             double mod = world.getWindSpeed();
