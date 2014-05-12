@@ -11,8 +11,8 @@ package ageofsail;
  */
 public enum Direction {
     FRONT(0, "front", 0),
-    RIGHT(1, "starboard", 90),
-    LEFT(2, "port", 270),
+    RIGHT(1, "starboard", 270),
+    LEFT(2, "port", 90),
     BACK(3, "back", 180);
 
     private String name;

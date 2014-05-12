@@ -12,6 +12,12 @@ package ageofsail;
 public interface Ship {
 
     /**
+     * Get the id of a ship.
+     * @return The id of the ship.
+     */
+    public int getId();
+
+    /**
      * Updates the ship.
      * Ideally this is called once every frame,
      * however the elapsed time gives the posibility
@@ -30,15 +36,22 @@ public interface Ship {
     /**
      * Shoot in the given direction.
      * @param direction The direction.
+     * @return Whether fired successfully or not.
      */
-    public void shoot(final Direction direction);
+    public boolean shoot(final Direction direction);
 
     /**
      * Set the desired head direction of the ship.
      *
-     * @param angle The angle where to head in degree.
+     * @param angle The angle where to head. (in degree anti-clockwise)
      */
     public void setHeadDirection(final double angle);
+
+    /**
+     * Get the actual heading direction of the ship.
+     * @return The direction the ship is really heading. (in degree anti-clockwise)
+     */
+    public double getActualHeading();
 
     /**
      * Set the speed of the ship.
@@ -69,4 +82,22 @@ public interface Ship {
      * @return The longitude.
      */
     public double getLongitude();
+
+    /**
+     * Check if the ship is dead.
+     * @return Weather the ship is dead or not.
+     */
+    public boolean isDead();
+
+    /**
+     * Get the health of a ship.
+     * @return The health of a ship.
+     */
+    public int getHealth();
+
+    /**
+     * Damage a ship.
+     * @param damage The damage to deal.
+     */
+    public void damage(int damage);
 }
