@@ -81,6 +81,18 @@ public interface Ship {
      * @return The longitude.
      */
     public double getLongitude();
+    
+    /**
+     * Gets the amount of dublones this ship holds.
+     * @return
+     */
+    public int getLoot();
+    
+    /**
+     * Adds loot to this ship's hold
+     * @param collected The amount collected
+     */
+    public void addLoot(int collected);
 
     /**
      * Check if the ship is dead.

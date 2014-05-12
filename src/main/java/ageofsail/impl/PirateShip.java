@@ -38,6 +38,7 @@ public class PirateShip implements Ship{
     private final int id;
     private final double maxHealth;
     private int health = 0;
+    private int loot = 0;
     private double x;
     private double y;
     private double speed;
@@ -186,5 +187,15 @@ public class PirateShip implements Ship{
     @Override
     synchronized public void damage(int damage) {
         health -= damage;
+    }
+
+    @Override
+    public int getLoot() {
+        return loot;
+    }
+
+    @Override
+    public void addLoot(int collected) {
+        loot += collected;
     }
 }
