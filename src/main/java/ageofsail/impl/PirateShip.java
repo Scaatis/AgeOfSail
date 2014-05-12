@@ -97,8 +97,8 @@ public class PirateShip implements Ship{
         }
 
         // Now finaly move that ship.
-        x += speed * Math.cos(direction);
-        y += speed * Math.sin(direction);
+        x += speed * Math.cos(Math.toRadians(direction+90.0));
+        y += speed * Math.sin(Math.toRadians(direction+90.0));
     }
 
     private double applyWindPhysics(final double speed, final double direction) {
