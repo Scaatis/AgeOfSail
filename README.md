@@ -25,7 +25,7 @@ The points of sail are:
 * In irons (directly into the wind up to 45° to the wind) - the ship cannot gain speed, will slow down and eventually stop
 * Close haul (45° to 65° to the wind) 40% maximum speed
 * Beam reach (65° to 115° to the wind) 60% maximum speed
-* Broad reach (115° to 100° to the wind) 100% maximum speed
+* Broad reach (115° to 120° to the wind) 100% maximum speed
 * Running (120° to directly with the wind) 80% maximum speed
 
 To move at maximum speed in a straight line then, a ship must move in a zig-zag pattern to remain at broad reach for as much time as possible. To make tighter turns, or to otherwise outmaneuver an enemy, a ship can go to half sail. It will move at 50% speed (multiplicative with other speed modifiers). A ship can also haul all sail and stop.
