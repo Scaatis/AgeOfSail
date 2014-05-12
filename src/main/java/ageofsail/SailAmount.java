@@ -7,19 +7,19 @@ package ageofsail;
  * @version 1.0
  * @since 2014-05-12
  */
-public enum Speed {
+public enum SailAmount {
     /**
      * The ship is driving at half speed.
      */
-    HALF("half", 0.5),
+    HALF("half sail", 0.5),
     /**
      * The ship is driving at full speed.
      */
-    FULL("full", 1.0),
+    FULL("full sail", 1.0),
     /**
      * The ship is stopped.
      */
-    HAUL("haul", 0.0);
+    STOP("no sail", 0.0);
 
     private String name;
     private double modifier;
@@ -28,7 +28,7 @@ public enum Speed {
      * Used to create an instance of the enum with a name for the to string.
      * @param name The speed name.
      */
-    Speed(final String name, final double modifier) {
+    SailAmount(final String name, final double modifier) {
         this.name = name;
         this.modifier = modifier;
     }

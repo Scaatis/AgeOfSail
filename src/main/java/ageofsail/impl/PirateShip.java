@@ -2,7 +2,7 @@ package ageofsail.impl;
 
 import ageofsail.Direction;
 import ageofsail.Ship;
-import ageofsail.Speed;
+import ageofsail.SailAmount;
 import ageofsail.World;
 
 /**
@@ -44,8 +44,8 @@ public class PirateShip implements Ship{
     private double direction;
     private double[] reloadTime = new double [SHOOTING_DIRECTIONS];
 
-    private double headDirection;
-    private Speed speedLevel;
+    private double desiredHeading;
+    private SailAmount speedLevel;
     private World world;
 
     public PirateShip(final int id, final World world, final int health, final int latitude, final int longitude) {
@@ -66,8 +66,8 @@ public class PirateShip implements Ship{
     synchronized public void update(final double elapsedTime) {
 
         // Update the direction of the ship.
-        if (headDirection != direction) {
-            double dif = headDirection - direction;
+        if (desiredHeading != direction) {
+            double dif = desiredHeading - direction;
             dif = dif > 180.0 ? dif - 360.0 : dif;
             dif = dif > TURN_SPEED * elapsedTime ? TURN_SPEED * elapsedTime : dif;
             direction += dif;
@@ -130,12 +130,7 @@ public class PirateShip implements Ship{
     }
 
     @Override
-    synchronized public void reload(final Direction direction) {
-        // FIXME is this really usefull?
-    }
-
-    @Override
-    synchronized public boolean shoot(final Direction direction) {
+    synchronized public boolean fire(final Direction direction) {
         if (reloadTime[direction.getId()] == 0) {
             reloadTime[direction.getId()] = RECOIL;
             return true;
@@ -144,22 +139,27 @@ public class PirateShip implements Ship{
     }
 
     @Override
-    synchronized public void setHeadDirection(final double angle) {
-        headDirection = angle;
+    synchronized public void setDesiredHeading(final double angle) {
+        desiredHeading = angle;
+    }
+    
+    @Override
+    public double getDesiredHeading() {
+        return desiredHeading;
     }
 
     @Override
-    synchronized public double getActualHeading() {
+    synchronized public double getHeading() {
         return direction;
     }
 
     @Override
-    synchronized public void setSpeed(final Speed speed) {
+    synchronized public void setSailAmount(final SailAmount speed) {
         speedLevel = speed;
     }
 
     @Override
-    synchronized public Speed getSpeed() {
+    synchronized public SailAmount getSailAmount() {
         return speedLevel;
     }
 

@@ -27,43 +27,42 @@ public interface Ship {
     public void update(final double elapsedTime);
 
     /**
-     * Reload the cannon in the given direction.
-     *
-     * @param direction The direction.
-     */
-    public void reload(final Direction direction);
-
-    /**
      * Shoot in the given direction.
      * @param direction The direction.
      * @return Whether fired successfully or not.
      */
-    public boolean shoot(final Direction direction);
+    public boolean fire(final Direction direction);
 
     /**
-     * Set the desired head direction of the ship.
+     * Set the desired heading of the ship.
      *
      * @param angle The angle where to head. (in degree anti-clockwise)
      */
-    public void setHeadDirection(final double angle);
+    public void setDesiredHeading(final double angle);
 
     /**
      * Get the actual heading direction of the ship.
      * @return The direction the ship is really heading. (in degree anti-clockwise)
      */
-    public double getActualHeading();
+    public double getHeading();
+    
+    /**
+     * Get the ship's desired heading
+     * @return The direction the ship turns towards. (in degree anti-clockwise)
+     */
+    public double getDesiredHeading();
 
     /**
      * Set the speed of the ship.
      * @param speed The speed of the ship.
      */
-    public void setSpeed(final Speed speed);
+    public void setSailAmount(final SailAmount speed);
 
     /**
      * Get the speed of the ship.
      * @return The speed of the ship.
      */
-    public Speed getSpeed();
+    public SailAmount getSailAmount();
 
     /**
      * The latitude of the ship.
