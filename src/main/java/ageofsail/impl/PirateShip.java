@@ -122,7 +122,7 @@ public class PirateShip implements Ship{
             res *= 0.4;
         } else if (dif < 115) {
             res *= 0.6;
-        } else if (dif < 120) {
+        } else if (dif < 160) {
             res *= 1.0;
         } else {
             res *= 0.8;
