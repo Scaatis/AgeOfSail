@@ -83,14 +83,14 @@ Will cause your crew to yell taunts. Additional restrictions to the text may app
 
 **Sent by the server:**
 
-Lon(gitute) and Lat(itude) are coordinates where `78;15` corresponds to the Southeast corner of the map and `79;15` corresponds to the Southwest corner.
+Lon(gitute) and Lat(itude) are coordinates where `78;15` corresponds to the southeast corner of the map and `79;16` corresponds to the northwest corner. Headings are given in clockwise degrees where 0° is due north.
 
     { "type":"sighted",
       "id":77,
       "captain":"Blackbot v.2",
       "score":13
     }
-Announces that a player (or dumboat) has spawned. Dumboats will always have score 0 and captain "The Spanish Crown". The id will remain the same for the lifetime of the ship, i.e. until it sinks or goes to port.
+Announces that a player (or dumboat) has spawned. Dumboats will always have score 0 and captain "A Spanish Trader". The id will remain the same for the lifetime of the ship, i.e. until it sinks or goes to port.
 
     { "type":"sunk",
       "id":77,
@@ -155,4 +155,5 @@ Footnotes
 -------------------------------------------------------------------------------------------
 
 (1) Exact values subject to change
+
 (2) This may or may not become a "hit summary" in case several cannonballs fired in the same salvo do not hit simultaneously.
