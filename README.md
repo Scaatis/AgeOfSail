@@ -131,6 +131,18 @@ Announces that a ship has fired cannons. It also announces your failure to compr
     }
 Announces that a player has hit another player with cannons, how much damage was done and how many hit points the defender has remaining. (2)
 
+    { "type":"rename",
+      "oldname":"Blackbot v.1",
+      "newname":"Blackbot v.2"
+    }
+Announces that another sailor has renamed his captain.
+
+    { "type":"taunt",
+      "yelledby":"Blackbot v.2",
+      "text":"Thou art a yellow-bellied deckswab"
+    }
+You are being taunted! You will not receive this message if you were the one taunting.
+
     { "type":"report",
       "ships": [ 
         { "id":77
