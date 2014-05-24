@@ -9,12 +9,14 @@ import ageofsail.Title;
 public class Pirate implements Player {
 
     private String name;
+    private InetAddress address;
     private Title  title;
     private Ship   ship;
     private int    score;
 
-    public Pirate() {
-        name = "unnamed";
+    public Pirate(InetAddress address) {
+        this.address = address;
+        name = "An unnamed Sailor";
         title = Title.NONE;
         ship = null;
         score = 0;
@@ -22,8 +24,7 @@ public class Pirate implements Player {
 
     @Override
     public InetAddress getIP() {
-        // FIXME
-        return null;
+        return address;
     }
 
     @Override
@@ -59,13 +60,15 @@ public class Pirate implements Player {
     public void addScore(int score) {
         this.score += score;
     }
-
+    
+    @Override
     public void grantTitle(Title title) {
         if (this.title.compareTo(title) < 0) {
             this.title = title;
         }
     }
     
+    @Override
     public void clearTitle() {
         title = Title.NONE;
     }

@@ -30,4 +30,15 @@ public interface Player {
      * @param score The amount to add
      */
     public void addScore(int score);
+    
+    /**
+     * Grant a title to a player, if he does not already hold a higher one
+     * @param title
+     */
+    public void grantTitle(Title title);
+    
+    /**
+     * Revoke a player's title
+     */
+    public void clearTitle();
 }

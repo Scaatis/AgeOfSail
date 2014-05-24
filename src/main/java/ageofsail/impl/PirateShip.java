@@ -145,7 +145,7 @@ public class PirateShip implements Ship{
     }
     
     @Override
-    public double getDesiredHeading() {
+    synchronized public double getDesiredHeading() {
         return desiredHeading;
     }
 
@@ -190,12 +190,12 @@ public class PirateShip implements Ship{
     }
 
     @Override
-    public int getLoot() {
+    synchronized public int getLoot() {
         return loot;
     }
 
     @Override
-    public void addLoot(int collected) {
+    synchronized public void addLoot(int collected) {
         loot += collected;
     }
 }
