@@ -12,7 +12,7 @@ import ageofsail.World;
  * @version 1.0
  * @since 2014-05-12
  */
-public class PirateShip implements Ship{
+public class PirateShip implements Ship {
     private static final int SHOOTING_DIRECTIONS = 0;
 
     /**
