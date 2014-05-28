@@ -1,8 +1,12 @@
 package ageofsail.objects;
 
+import java.awt.geom.Point2D;
+
 import ageofsail.Direction;
 import ageofsail.Sea;
 import ageofsail.Ship;
+import ageofsail.Vector2D;
+import ageofsail.Vector2D.Polar;
 
 /**
  * A pirate ship. Arrrrrrrr....
@@ -46,8 +50,38 @@ public class PirateShip extends Ship {
         if (!super.fire(direction)) {
             return false;
         }
-        // FIXME: Add Cannonballs
-        return true;
+        double dir = getSpeed().getDirection();
+        if (direction == Direction.LEFT) {
+            dir += Math.PI / 2;
+            Vector2D offset = new Vector2D.Polar(getSpeed().getDirection(), 1.5);
+            // FIXME: Die Parameter hier:
+            Point2D start = new Vector2D.Polar(getSpeed().getDirection() + Math.toRadians(135), 5).applyTo(getPosition());
+            for (int i = 0; i < 10; i++) {
+                getScene().spawnObject(new Cannonball(start, dir, this));
+                start = offset.applyTo(start);
+            }
+            return true;
+        } else if (direction == Direction.RIGHT) {
+            dir -= Math.PI / 2;
+            Vector2D offset = new Vector2D.Polar(getSpeed().getDirection(), 1.5);
+            // FIXME: Die Parameter hier:
+            Point2D start = new Vector2D.Polar(getSpeed().getDirection() - Math.toRadians(135), 5).applyTo(getPosition());
+            for (int i = 0; i < 10; i++) {
+                getScene().spawnObject(new Cannonball(start, dir, this));
+                start = offset.applyTo(start);
+            }
+            return true;
+        } else if (direction == Direction.FRONT) {
+            Vector2D offset = new Vector2D.Polar(getSpeed().getDirection() + Math.PI / 2, 1.5);
+            // FIXME: Die Parameter hier:
+            Point2D start = new Vector2D.Polar(getSpeed().getDirection() + Math.toRadians(15), 8).applyTo(getPosition());
+            for (int i = 0; i < 3; i++) {
+                getScene().spawnObject(new Cannonball(start, dir, this));
+                start = offset.applyTo(start);
+            }
+            return true;
+        }
+        return false;
     }
 
     public void setDesiredHeading(final double angle) {
@@ -57,7 +91,7 @@ public class PirateShip extends Ship {
     public double getDesiredHeading() {
         return desiredHeading;
     }
-    
+
     public void addLoot(int collected) { // FIXME: This needs to be collect(LootChest chest)
         setLoot(getLoot() + collected); // FIXME: Despawn lootchest
     }

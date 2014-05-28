@@ -13,12 +13,12 @@ import ageofsail.engine.Scene;
  */
 public class Sea extends Scene {
     
-    public static final double WIND_SPEED = 100;
+    public static final double WIND_SPEED = 20;
     
     private Vector2D wind;
     
     public Sea() {
-        super(new Dimension(6000, 6000));
+        super(new Dimension(1200, 1200));
         wind = new Vector2D.Polar(0, WIND_SPEED);
     }
     
