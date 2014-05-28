@@ -129,7 +129,8 @@ public abstract class Ship extends GameObject {
 
     public void damage(int damage) {
         health -= damage;
-        // FIXME: handle dying
+        destroy();
+        // FIXME: sinking ship sprite
     }
 
     public int getLoot() {

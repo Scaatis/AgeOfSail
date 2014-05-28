@@ -9,10 +9,12 @@ public abstract class GameObject {
     private GraphicsResource resource;
     private Point2D          position;
     private Scene            scene;
+    private boolean          destroyed;
 
     public GameObject(GraphicsResource resource, Point2D position) {
         this.position = position;
         this.resource = resource;
+        destroyed = false;
     }
 
     public GameObject(Scene scene, GraphicsResource resource, Point2D position) {
@@ -62,7 +64,16 @@ public abstract class GameObject {
         }
 
     }
-    
+
+    public void destroy() {
+        destroyed = true;
+        setScene(null);
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     public Rectangle2D getBounds() {
         Rectangle bounds = resource.getBounds();
         return new Rectangle2D.Double(position.getX() + bounds.x, position.getY() + bounds.y, bounds.width, bounds.height);
