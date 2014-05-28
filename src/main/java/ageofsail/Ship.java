@@ -1,114 +1,156 @@
 package ageofsail;
 
-/**
- * A ship.
- *
- * A ship has several basic operations it can do.
- *
- * @author Michael Fürst
- * @version 1.0
- * @since 2014-05-12
- */
-public interface Ship {
+import java.awt.Point;
+
+import ageofsail.engine.DummyResource;
+import ageofsail.engine.GameObject;
+
+public abstract class Ship extends GameObject {
+    /**
+     * Acceleration of the ship.
+     */
+    public static final double ACCELERATION    = 1.0;
 
     /**
-     * Get the id of a ship.
-     * @return The id of the ship.
+     * The cooldown of the cannons.
      */
-    public int getId();
+    public static final double CANNON_COOLDOWN = 1.0;
 
-    /**
-     * Updates the ship.
-     * Ideally this is called once every frame,
-     * however the elapsed time gives the posibility
-     * to vary with simulation speed.
-     * @param elapsedTime The time elapsed since the last call. (Can also be passed a constant value of 1.0/FPS)
-     */
-    public void update(final double elapsedTime);
+    private final int          id;
+    private int                health          = 0;
+    private int                loot            = 0;
+    private Vector2D           speed;
+    private double[]           gunCooldowns;
+    private Sea                world;
+    private SailAmount         sailAmount;
 
-    /**
-     * Shoot in the given direction.
-     * @param direction The direction.
-     * @return Whether fired successfully or not.
-     */
-    public boolean fire(final Direction direction);
+    public Ship(int id, Sea world, int health, int loot) {
+        super(world, new DummyResource(), new Point()); // FIXME: spawn position here.
+        this.id = id;
+        this.world = world;
+        this.health = health;
+        this.loot = loot;
+        sailAmount = SailAmount.FULL;
+        speed = new Vector2D.Polar(0, 0);
+        gunCooldowns = new double[Direction.values().length];
+        for (Direction direction : Direction.values()) {
+            gunCooldowns[direction.ordinal()] = 0;
+        }
+    }
 
-    /**
-     * Set the desired heading of the ship.
-     *
-     * @param angle The angle where to head. (in degree anti-clockwise)
-     */
-    public void setDesiredHeading(final double angle);
+    public int getId() {
+        return id;
+    }
 
-    /**
-     * Get the actual heading direction of the ship.
-     * @return The direction the ship is really heading. (in degree anti-clockwise)
-     */
-    public double getHeading();
+    @Override
+    public void update(final double delta) {
+        // Update the speed of the ship.alth is ok.
+        double windMod = windPhysics();
+        // Full speed at full health, half speed at no health
+        double healthMod = 0.5 * getHealth() / getMaxHealth() + 0.5;
+        double sailMod = sailAmount.getModifier();
+        double targetSpeed = world.getWindSpeed() * windMod * healthMod * sailMod;
+        if (Math.abs(targetSpeed - speed.getMagnitude()) > 1e4) {
+            double diff = speed.getMagnitude() - targetSpeed;
+            if (diff < 0) { // we are slower than we should be
+                speed = new Vector2D.Polar(speed.getDirection(), speed.getMagnitude() + Math.min(ACCELERATION * delta, diff));
+            }
+        }
+
+        // Reload guns
+        for (Direction direction : Direction.values()) {
+            if (gunCooldowns[direction.ordinal()] > 0) {
+                gunCooldowns[direction.ordinal()] -= delta;
+            }
+        }
+
+        // Now finaly move the ship.
+        setPosition(speed.scale(delta).applyTo(getPosition()));
+        
+        // FIXME: Handle going to port
+    }
+
+    private double windPhysics() {
+        assert world.getWindDirection() >= 0 && world.getWindDirection() < 2 * Math.PI;
+
+        // Calculate in what direction we are to the wind.
+        double diff = world.getWind().angleBetween(speed);
+        if (diff > Math.PI) {
+            diff -= 2 * Math.PI;
+        }
+        diff = Math.abs(diff);
+        assert diff >= 0.0 && diff <= Math.PI;
+
+        // Now modify our speed.
+        double res;
+        if (diff < 45.0) {
+            res = 0;
+        } else if (diff < 65) {
+            res = 0.4;
+        } else if (diff < 115) {
+            res = 0.6;
+        } else if (diff < 160) {
+            res = 1.0;
+        } else {
+            res = 0.8;
+        }
+        return res;
+    }
+
+    public boolean fire(final Direction direction) {
+        if (gunCooldowns[direction.ordinal()] <= 0) {
+            gunCooldowns[direction.ordinal()] = CANNON_COOLDOWN;
+            return true;
+        }
+        return false;
+    }
+
+    public double getHeading() {
+        return speed.getDirection();
+    }
+
+    public void setSailAmount(final SailAmount speed) {
+        sailAmount = speed;
+    }
+
+    public SailAmount getSailAmount() {
+        return sailAmount;
+    }
+
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    public int getHealth() {
+        return health;
+    }
     
-    /**
-     * Get the ship's desired heading
-     * @return The direction the ship turns towards. (in degree anti-clockwise)
-     */
-    public double getDesiredHeading();
+    public abstract int getMaxHealth();
 
-    /**
-     * Set the speed of the ship.
-     * @param speed The speed of the ship.
-     */
-    public void setSailAmount(final SailAmount speed);
+    public void damage(int damage) {
+        health -= damage;
+        // FIXME: handle dying
+    }
 
-    /**
-     * Get the speed of the ship.
-     * @return The speed of the ship.
-     */
-    public SailAmount getSailAmount();
-
-    /**
-     * The latitude of the ship.
-     *
-     * Distance to the equator.
-     *
-     * @return The latitude.
-     */
-    public double getLatitude();
-
-    /**
-     * The longitude of the ship.
-     *
-     * Distance to the zero meridian.
-     *
-     * @return The longitude.
-     */
-    public double getLongitude();
+    public int getLoot() {
+        return loot;
+    }
     
-    /**
-     * Gets the amount of dublones this ship holds.
-     * @return
-     */
-    public int getLoot();
-    
-    /**
-     * Adds loot to this ship's hold
-     * @param collected The amount collected
-     */
-    public void addLoot(int collected);
+    public abstract void goToPort();
 
-    /**
-     * Check if the ship is dead.
-     * @return Weather the ship is dead or not.
-     */
-    public boolean isDead();
+    protected Sea getWorld() {
+        return world;
+    }
 
-    /**
-     * Get the health of a ship.
-     * @return The health of a ship.
-     */
-    public int getHealth();
+    protected void setLoot(int loot) {
+        this.loot = loot;
+    }
 
-    /**
-     * Damage a ship.
-     * @param damage The damage to deal.
-     */
-    public void damage(int damage);
+    protected void setSpeed(Vector2D speed) {
+        this.speed = speed;
+    }
+
+    protected Vector2D getSpeed() {
+        return speed;
+    }
 }

@@ -1,12 +1,10 @@
-package ageofsail.impl;
+package ageofsail.engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import ageofsail.GraphicsResource;
 
 public class SpriteSheet {
     private BufferedImage image;

@@ -1,4 +1,4 @@
-package ageofsail.impl;
+package ageofsail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,10 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-
-import ageofsail.Connection;
-import ageofsail.GameServer;
-import ageofsail.Player;
 
 public class ConnectionImpl implements Connection {
 

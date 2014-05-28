@@ -1,4 +1,4 @@
-package ageofsail;
+package ageofsail.engine;
 
 public interface TextResource extends GraphicsResource {
     public String getText();

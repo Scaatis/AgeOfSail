@@ -1,4 +1,4 @@
-package ageofsail;
+package ageofsail.engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

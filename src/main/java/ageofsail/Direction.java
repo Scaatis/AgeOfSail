@@ -10,13 +10,12 @@ package ageofsail;
  * @since 2014-05-12
  */
 public enum Direction {
-    FRONT(0, "forward", 0),
-    RIGHT(1, "starboard", 270),
-    LEFT(2, "port", 90),
-    BACK(3, "astern", 180);
+    FRONT("forward", 0),
+    RIGHT("starboard", 270),
+    LEFT("port", 90);
+    //BACK("astern", 180);
 
     private String name;
-    private int id;
     private double angle;
 
     /**
@@ -24,18 +23,9 @@ public enum Direction {
      * @param name The name.
      * @param id The id.
      */
-    Direction(final int id, final String name, final double angle) {
+    Direction(final String name, final double angle) {
         this.name = name;
-        this.id = id;
         this.angle = angle;
-    }
-
-    /**
-     * Get the id of the direction.
-     * @return The id of the direction.
-     */
-    public int getId() {
-        return id;
     }
 
     /**

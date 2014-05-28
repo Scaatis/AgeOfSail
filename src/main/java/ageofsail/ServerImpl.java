@@ -1,4 +1,4 @@
-package ageofsail.impl;
+package ageofsail;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -6,10 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ageofsail.Connection;
-import ageofsail.GameServer;
-import ageofsail.Player;
 
 public class ServerImpl implements GameServer {
 
