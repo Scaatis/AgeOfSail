@@ -18,6 +18,13 @@ public interface Ship {
     public int getId();
 
     /**
+     * Spawn a ship at a given position.
+     * @param latitude The latitude.
+     * @param longitude The longitude.
+     */
+    public void spawn(final double latitude, final double longitude);
+
+    /**
      * Updates the ship.
      * Ideally this is called once every frame,
      * however the elapsed time gives the posibility
@@ -99,6 +106,12 @@ public interface Ship {
      * @return Weather the ship is dead or not.
      */
     public boolean isDead();
+
+    /**
+     * The ship left the map.
+     * Tell it what it just did.
+     */
+    public void leaveMap();
 
     /**
      * Get the health of a ship.

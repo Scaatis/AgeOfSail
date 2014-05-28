@@ -36,24 +36,28 @@ public class PirateShip implements Ship {
     private static double RECOIL = 1.0;
 
     private final int id;
-    private final double maxHealth;
+    private final int maxHealth;
     private int health = 0;
     private int loot = 0;
     private double x;
     private double y;
     private double speed;
-    private double direction;
     private double[] reloadTime = new double [SHOOTING_DIRECTIONS];
+    protected double direction;
 
     private double desiredHeading;
     private SailAmount speedLevel;
-    private World world;
+    protected World world;
 
-    public PirateShip(final int id, final World world, final int health, final int latitude, final int longitude) {
+    public PirateShip(final int id, final World world, final int health) {
         this.id = id;
         this.world = world;
         this.maxHealth = health;
-        this.health = health;
+    }
+
+    @Override
+    public void spawn(final double latitude, final double longitude) {
+        this.health = maxHealth;
         this.x = longitude;
         this.y = latitude;
     }
@@ -65,6 +69,9 @@ public class PirateShip implements Ship {
 
     @Override
     synchronized public void update(final double elapsedTime) {
+        if (isDead()) {
+            return; // Don't move!
+        }
 
         // Update the direction of the ship.
         if (desiredHeading != direction) {
@@ -177,6 +184,11 @@ public class PirateShip implements Ship {
     @Override
     synchronized public boolean isDead() {
         return health <= 0;
+    }
+
+    @Override
+    public void leaveMap() {
+        // TODO no idea what happens in this case.
     }
 
     @Override

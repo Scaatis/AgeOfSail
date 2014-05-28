@@ -30,6 +30,27 @@ public interface World {
     public double getWindSpeed();
 
     /**
+     * The upper latitude boundary.
+     * @return The latitude.
+     */
+    public double getUpperLatitudeBoundary();
+    /**
+     * The lower latitude boundary.
+     * @return The latitude.
+     */
+    public double getLowerLatitudeBoundary();
+    /**
+     * The upper longitude boundary.
+     * @return The longitude.
+     */
+    public double getUpperLongitudeBoundary();
+    /**
+     * The lower longitude boundary.
+     * @return The longitude.
+     */
+    public double getLowerLongitudeBoundary();
+
+    /**
      * Update the world.
      *
      * This should also update all ships inside the world.
